@@ -7,6 +7,13 @@ library(ROCR)
 #old_data  <- read.csv("/Users/brundhar/Desktop/DSR Project/creditcard.csv")   #for all 2.8L records
 data  <- read.csv("/Users/brundhar/Desktop/DSR Project/Shortcreditcard.csv")    #for 20k records
 
+#DATA PREPERATION
+
+#scaling formula=(value-mean)/standard deviation
+data$Amount=scale(data$Amount)
+data$Time=scale(data$Time)
+
+#splitting into training and testing data sets
 set.seed(123)
 data_sample = sample.split(data$Class,SplitRatio=0.80)
 train_data = subset(data,data_sample==TRUE)
