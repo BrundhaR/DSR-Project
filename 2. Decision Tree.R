@@ -7,8 +7,6 @@ library(ROCR)
 #old_data  <- read.csv("/Users/brundhar/Desktop/DSR Project/creditcard.csv")   #for all 2.8L records
 data  <- read.csv("/Users/brundhar/Desktop/DSR Project/Shortcreditcard.csv")    #for 20k records
 
-NewData<-data[,-c(1)]
-
 set.seed(123)
 data_sample = sample.split(data$Class,SplitRatio=0.80)
 train_data = subset(data,data_sample==TRUE)
