@@ -13,16 +13,14 @@ data  <- read.csv("/Users/brundhar/Desktop/DSR Project/Shortcreditcard.csv")    
 data$Amount=scale(data$Amount)
 data$Time=scale(data$Time)
 
-#NewData=data[,-c(1)]
-#head(NewData)
-
 #splitting into training and testing data sets
 set.seed(123)
 data_sample = sample.split(data$Class,SplitRatio=0.80)
 train_data = subset(data,data_sample==TRUE)
-train_data_class=train_data$Class
 train_data = train_data[,-c(1)]
-test_data = subset(data,data_sample==FALSE)[,-c(1)]
+test_data = subset(data,data_sample==FALSE)
+test_data_class=test_data$Class
+test_data = test_data[,-c(1)]
 dim(train_data)
 dim(test_data)
 
@@ -57,11 +55,9 @@ print(gbm_auc)
 end_time_g <- Sys.time()
 cat ("Time taken to build model:", (end_time_g - start_time_g))
 
-class<-test_data$Class
-head(class)
+class<-test_data_class
 var2<-cbind.data.frame( test_data$Time, test_data$Amount, class )
-pred<-predict(Logistic_Model,type="response")
-
+pred<-predict(model_gbm,type="response")
 
 predobj<-prediction(gbm_test,var2$class)
 rocobj<-performance(predobj,measure="tpr",x.measure="fpr")
